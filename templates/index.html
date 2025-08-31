@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Price Predictor - AI-Powered Real Estate</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/animations.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <i class="fas fa-home"></i>
+            </div>
+            <div class="loading-text">
+                <h2>House Price Predictor</h2>
+                <p>Initializing AI Engine...</p>
+            </div>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+        </div>
+        <div class="loading-particles">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-home"></i>
+                <span>PricePredictor</span>
+            </div>
+            <div class="nav-menu">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#predictor" class="nav-link">Predictor</a>
+                <a href="#stats" class="nav-link">Statistics</a>
+                <a href="#about" class="nav-link">About</a>
+            </div>
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-background">
+            <div class="hero-shapes">
+                <div class="shape shape-1"></div>
+                <div class="shape shape-2"></div>
+                <div class="shape shape-3"></div>
+            </div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">
+                    <span class="title-line">AI-Powered</span>
+                    <span class="title-line">House Price</span>
+                    <span class="title-line highlight">Prediction</span>
+                </h1>
+                <p class="hero-description">
+                    Get accurate real estate valuations using advanced machine learning algorithms. 
+                    Predict property prices instantly with our state-of-the-art AI model.
+                </p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="scrollToSection('predictor')">
+                        <i class="fas fa-calculator"></i>
+                        Start Prediction
+                    </button>
+                    <button class="btn btn-secondary" onclick="scrollToSection('stats')">
+                        <i class="fas fa-chart-line"></i>
+                        View Statistics
+                    </button>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="house-model">
+                    <div class="house-base"></div>
+                    <div class="house-roof"></div>
+                    <div class="house-door"></div>
+                    <div class="house-windows">
+                        <div class="window"></div>
+                        <div class="window"></div>
+                    </div>
+                    <div class="house-price-tag">
+                        <span class="price-symbol">$</span>
+                        <span class="price-amount" id="animated-price">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-arrow">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature-card" data-aos="fade-up" data-delay="0">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>AI-Powered</h3>
+                    <p>Advanced machine learning algorithms trained on thousands of property data points</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-delay="100">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Instant Results</h3>
+                    <p>Get accurate price predictions in seconds with real-time processing</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-delay="200">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Market Analysis</h3>
+                    <p>Comprehensive market insights and statistical analysis for informed decisions</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-delay="300">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Reliable Data</h3>
+                    <p>Built on verified real estate data with continuous model improvements</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Predictor Section -->
+    <section id="predictor" class="predictor">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">House Price Predictor</h2>
+                <p class="section-subtitle">Enter property details to get an instant AI-powered price prediction</p>
+            </div>
+            
+            <div class="predictor-container">
+                <div class="predictor-form">
+                    <form id="prediction-form">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="area">
+                                    <i class="fas fa-ruler-combined"></i>
+                                    Area (sq meters)
+                                </label>
+                                <input type="number" id="area" name="area" required min="1" step="0.1">
+                                <div class="input-highlight"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="rooms">
+                                    <i class="fas fa-bed"></i>
+                                    Number of Rooms
+                                </label>
+                                <input type="number" id="rooms" name="rooms" required min="1" max="20">
+                                <div class="input-highlight"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="parking">
+                                    <i class="fas fa-car"></i>
+                                    Parking Spaces
+                                </label>
+                                <input type="number" id="parking" name="parking" required min="0" max="10">
+                                <div class="input-highlight"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="warehouse">
+                                    <i class="fas fa-warehouse"></i>
+                                    Warehouse
+                                </label>
+                                <select id="warehouse" name="warehouse" required>
+                                    <option value="">Select...</option>
+                                    <option value="0">No</option>
+                                    <option value="1">Yes</option>
+                                </select>
+                                <div class="input-highlight"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="elevator">
+                                    <i class="fas fa-elevator"></i>
+                                    Elevator
+                                </label>
+                                <select id="elevator" name="elevator" required>
+                                    <option value="">Select...</option>
+                                    <option value="0">No</option>
+                                    <option value="1">Yes</option>
+                                </select>
+                                <div class="input-highlight"></div>
+                            </div>
+                            
+                            <div class="form-group full-width">
+                                <label for="address">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    Address/Location
+                                </label>
+                                <input type="text" id="address" name="address" required 
+                                       placeholder="Enter address in English (e.g., Shahran, Pardis, Saadat Abad...)"
+                                       autocomplete="off">
+                                <div class="input-highlight"></div>
+                                <div class="address-suggestions" id="address-suggestions"></div>
+                                <div class="address-help">
+                                    <small>Type an address name in English. The system will automatically find the best match.</small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-predict">
+                            <span class="btn-text">
+                                <i class="fas fa-magic"></i>
+                                Predict Price
+                            </span>
+                            <div class="btn-loader">
+                                <div class="spinner"></div>
+                            </div>
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="prediction-result" id="prediction-result">
+                    <div class="result-header">
+                        <h3>Prediction Result</h3>
+                        <div class="result-status">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                    </div>
+                    <div class="result-content">
+                        <div class="price-display">
+                            <div class="price-toman">
+                                <span class="currency">تومان</span>
+                                <span class="amount" id="price-toman">0</span>
+                            </div>
+                            <div class="price-usd">
+                                <span class="currency">$</span>
+                                <span class="amount" id="price-usd">0</span>
+                            </div>
+                        </div>
+                        <div class="result-details">
+                            <div class="detail-item">
+                                <span class="label">Confidence Level</span>
+                                <div class="confidence-bar">
+                                    <div class="confidence-fill" style="width: 92%"></div>
+                                </div>
+                                <span class="value">92%</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Market Trend</span>
+                                <span class="value trend-up">
+                                    <i class="fas fa-arrow-up"></i>
+                                    Increasing
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section id="stats" class="statistics">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Market Statistics</h2>
+                <p class="section-subtitle">Real-time insights from our comprehensive property database</p>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card" data-aos="zoom-in" data-delay="0">
+                    <div class="stat-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-number" data-target="0">0</h3>
+                        <p class="stat-label">Total Properties</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card" data-aos="zoom-in" data-delay="100">
+                    <div class="stat-icon">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-number" data-target="0">0</h3>
+                        <p class="stat-label">Average Price (Toman)</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card" data-aos="zoom-in" data-delay="200">
+                    <div class="stat-icon">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-number" data-target="0">0</h3>
+                        <p class="stat-label">Locations Covered</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card" data-aos="zoom-in" data-delay="300">
+                    <div class="stat-icon">
+                        <i class="fas fa-chart-area"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-number" data-target="0">0</h3>
+                        <p class="stat-label">Avg Area (sq m)</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="price-distribution">
+                <h3>Price Distribution</h3>
+                <div class="distribution-chart">
+                    <div class="chart-bar" data-percentage="0">
+                        <div class="bar-fill"></div>
+                        <span class="bar-label">Under 1B</span>
+                        <span class="bar-value">0</span>
+                    </div>
+                    <div class="chart-bar" data-percentage="0">
+                        <div class="bar-fill"></div>
+                        <span class="bar-label">1B - 5B</span>
+                        <span class="bar-value">0</span>
+                    </div>
+                    <div class="chart-bar" data-percentage="0">
+                        <div class="bar-fill"></div>
+                        <span class="bar-label">5B - 10B</span>
+                        <span class="bar-value">0</span>
+                    </div>
+                    <div class="chart-bar" data-percentage="0">
+                        <div class="bar-fill"></div>
+                        <span class="bar-label">Over 10B</span>
+                        <span class="bar-value">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>About Our AI Model</h2>
+                    <p>Our house price prediction system uses advanced machine learning algorithms including Random Forest, Gradient Boosting, and Linear Regression models to provide accurate property valuations.</p>
+                    
+                    <div class="about-features">
+                        <div class="about-feature">
+                            <i class="fas fa-database"></i>
+                            <div>
+                                <h4>Comprehensive Dataset</h4>
+                                <p>Trained on thousands of real property transactions</p>
+                            </div>
+                        </div>
+                        <div class="about-feature">
+                            <i class="fas fa-cogs"></i>
+                            <div>
+                                <h4>Advanced Algorithms</h4>
+                                <p>Multiple ML models with hyperparameter optimization</p>
+                            </div>
+                        </div>
+                        <div class="about-feature">
+                            <i class="fas fa-sync-alt"></i>
+                            <div>
+                                <h4>Continuous Learning</h4>
+                                <p>Model updates with new market data regularly</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-visual">
+                    <div class="model-diagram">
+                        <div class="model-layer input-layer">
+                            <div class="layer-title">Input Features</div>
+                            <div class="neurons">
+                                <div class="neuron">Area</div>
+                                <div class="neuron">Rooms</div>
+                                <div class="neuron">Location</div>
+                                <div class="neuron">Amenities</div>
+                            </div>
+                        </div>
+                        <div class="model-layer hidden-layer">
+                            <div class="layer-title">AI Processing</div>
+                            <div class="neurons">
+                                <div class="neuron"></div>
+                                <div class="neuron"></div>
+                                <div class="neuron"></div>
+                                <div class="neuron"></div>
+                                <div class="neuron"></div>
+                            </div>
+                        </div>
+                        <div class="model-layer output-layer">
+                            <div class="layer-title">Price Prediction</div>
+                            <div class="neurons">
+                                <div class="neuron output">$</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-home"></i>
+                        <span>PricePredictor</span>
+                    </div>
+                    <p>AI-powered real estate valuation platform providing accurate property price predictions.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Features</h4>
+                    <ul>
+                        <li><a href="#predictor">Price Prediction</a></li>
+                        <li><a href="#stats">Market Statistics</a></li>
+                        <li><a href="#about">AI Technology</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Technology</h4>
+                    <ul>
+                        <li>Machine Learning</li>
+                        <li>Random Forest</li>
+                        <li>Gradient Boosting</li>
+                        <li>Real-time Processing</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <div class="contact-info">
+                        <p><i class="fas fa-envelope"></i> info@pricepredictor.ai</p>
+                        <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 PricePredictor. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Notification System -->
+    <div id="notification-container"></div>
+
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
